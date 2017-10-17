@@ -1,3 +1,5 @@
+# THIS IS ALPHA SOFTWARE.
+ 
 # typ3-cli
 Command line tool to create a TypeScript strictly typed interface from an Ethereum ABI. This is a a developer tool for [typ3](https://github.com/Mike-Stupich/typ3) to allow for type inferencing.
 
