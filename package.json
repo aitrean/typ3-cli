@@ -3,27 +3,38 @@
   "version": "1.0.4",
   "description": "CLI tool for creating typed definition files from ABI",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "tsc": "tsc --watch"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mike-Stupich/typ3-cli.git"
+    "url": "git+https://github.com/MyCryptoHQ/typ3-cli.git"
   },
-  "author": "",
+  "author": "Mike Stupich, Henry Nguyen, William Prado",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Mike-Stupich/typ3-cli/issues"
+    "url": "https://github.com/MyCryptoHQ/typ3-cli/issues"
   },
-  "homepage": "https://github.com/Mike-Stupich/typ3-cli#readme",
+  "homepage": "https://github.com/MyCryptoHQ/typ3-cli#readme",
   "devDependencies": {
     "@types/node": "^8.0.34",
     "tslint": "^5.7.0",
-    "typescript": "^2.5.3"
+    "typescript": "^2.7.2"
   },
   "dependencies": {
     "command-line-args": "^4.0.7",
-    "command-line-usage": "^4.0.1"
+    "command-line-usage": "^4.0.1",
+    "require-relative": "^0.8.7"
   },
   "bin": {
     "typ3-cli": "./dist/index.js"
+  },
+  "precommit": "lint-staged",
+  "prettier:diff": "prettier --write --config ./.prettierrc --list-different \"common/**/*.ts\" \"common/**/*.tsx\"",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "prettier --write --config ./.prettierrc --config-precedence file-override",
+      "git add"
+    ]
   }
 }
