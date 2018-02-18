@@ -8,13 +8,15 @@ const relative = require('require-relative')
 export const buildTypedABIs = () => {
   const opts = options;
   const contractFiles = opts.files;
-  const abiOutputFiles = opts.outputSpecifications;
+  const abiSpecificationFiles = opts.outputSpecifications;
   const outputFile = opts.outputFile ? opts.outputFile : './abiTypes.ts';
+  const outputSpecifications = {}
   const printer = new Output(outputFile);
   
   try {
-    if(abiOutputFiles){
-      abiOutputFiles.forEach(file => {
+    //TODO handle abi output definitions
+    if(abiSpecificationFiles){
+      abiSpecificationFiles.forEach(file => {
         const specificationName = getName(file);
       })
     }

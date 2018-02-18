@@ -5,14 +5,27 @@ import { parseTypings } from './typingsParser'
 
 export const getAbiInterfaces = (abi, interfaceName, outputFile): string => {
  let abiTypings = '';
+ let connectedAbiTypings = '';
  let parameterCount = 0;
  abi.forEach(functionDefinition => {
-	abiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getAbiSignature(functionDefinition)}<${parseTypings(functionDefinition)}>;\n`;
+	if(functionDefinition.type !== 'event' && functionDefinition.type !== 'fallback') {
+		abiTypings += `${getFunctionName(functionDefinition, interfaceName)}: ${getAbiSignature(functionDefinition)}${parseTypings(functionDefinition)};\n`;
+		connectedAbiTypings += `${getFunctionName(functionDefinition, interfaceName)}: ${getAbiSignature(functionDefinition)}Connected${parseTypings(functionDefinition)};\n`;
+	}
 })
 
 	const contractInterface = `export interface I${interfaceName} {\n${abiTypings}}`
-	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${abiTypings}}`
+	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${connectedAbiTypings}}`
 
 	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}`
 	return combinedContractInterface;
+}
+
+//TODO enable no-implicit-any
+const getFunctionName = (functionDefinition, interfaceName) => {
+	if(functionDefinition.name){
+		return functionDefinition.name
+	} else {
+		return interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)
+	}
 }

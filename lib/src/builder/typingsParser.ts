@@ -22,5 +22,5 @@ export const parseTypings = (functionDef) => {
 			contents += `{${outputContents.slice(1)}}`
 		}
 	}
-	return contents.replace("}{", "},{") //TODO tidier parsing of objects relative to commas
+	return `${contents.length > 0 ? `<${contents}>` : ``}`
 }
