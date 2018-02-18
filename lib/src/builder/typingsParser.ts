@@ -19,7 +19,7 @@ export const parseTypings = (functionDef) => {
 			outputContents += `,${output.name ? `${output.name}` : `${count++}`}: ${convert(output.type)}`
 		})
 		if(outputContents.length > 0) {
-			contents += `{${outputContents.slice(1)}}`
+			contents += `${contents.length > 0 ? `,` : ``}{${outputContents.slice(1)}}`
 		}
 	}
 	return `${contents.length > 0 ? `<${contents}>` : ``}`
