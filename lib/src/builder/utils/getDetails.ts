@@ -16,11 +16,11 @@ export const getDetails = (functionDef: functionDefinition) => {
 	return `${getAbiSignature(functionDef)}`
 }
 
-const getParameters = (parametersDefinition: SolidityVariable[] | undefined) => {
+const getParameters = (parametersDefinition: SolidityVariable[] | undefined, outputNames?: string[]) => {
 	let count = 0;
 	let paramContents = ''
 	if(parametersDefinition){
-		parametersDefinition.forEach(param => {
+		parametersDefinition.map(param => {
 			paramContents += `,${param.name ? `${param.name}` : `${count++}`}: ${convert(param.type)}`
 		})
 		paramContents = paramContents.length > 0 ? paramContents.substr(1) : paramContents; //remove the leading comma
