@@ -1,13 +1,12 @@
-import { getPath, getName, getAbiSignature } from './utils'
+import { getPath, getName, getDetails } from './utils'
 import { Output } from '../io';
 import { interfaces } from '../builder'
-import { parseTypings } from './typingsParser'
 
-export const getAbiInterfaces = (abi, interfaceName, outputFile): string => {
+export const getAbiInterfaces = (abi: any, interfaceName: string, outputFile: string): string => {
  let abiTypings = '';
  let parameterCount = 0;
  abi.forEach(functionDefinition => {
-	abiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getAbiSignature(functionDefinition)}<${parseTypings(functionDefinition)}>;\n`;
+	abiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition)};\n`;
 })
 
 	const contractInterface = `export interface I${interfaceName} {\n${abiTypings}}`

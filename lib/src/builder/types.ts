@@ -1,19 +1,11 @@
-export class Types {
-  private types = {};
+export interface functionDefinition {
+  name?: string
+  inputs?: SolidityVariable[]
+  outputs?: SolidityVariable[]
+  constant?: boolean
+}
 
-  public mapType = (type: string) => {
-    type = type.split('[]')[0];
-    if (type === 'string') {
-      return;
-    }
-    const isArray = type.split('[]');
-    const isBool = type.startsWith('bool');
-
-    const strFactory = isBool ? 'boolean' : 'any';
-    if (!this.types[type]) {
-      this.types[type] = strFactory;
-    }
-  };
-
-  public getTypes = () => this.types;
+export interface SolidityVariable {
+  name: string
+  type: string
 }

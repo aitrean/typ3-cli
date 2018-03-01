@@ -1,0 +1,29 @@
+import { convert } from './convertSolidityTypings';
+import { SolidityVariable } from './../types';
+import { functionDefinition } from '../types'
+import { getAbiSignature } from './getAbiSignature'
+
+export const getDetails = (functionDef: functionDefinition) => {
+	const {name, inputs, outputs} = functionDef
+	const signature = getAbiSignature(functionDef);
+	const inputsPresent = inputs && (inputs.length > 0);
+	const outputsPresent = outputs && (outputs.length > 0) && functionDef.constant;
+	const inputParams = inputsPresent ? `{${getParameters(inputs)}}` : null
+	const outputParams = outputsPresent ? `{${getParameters(outputs)}}` : null
+	if(inputsPresent || outputsPresent){
+		return `${getAbiSignature(functionDef)}<${inputParams ? inputParams : ''}${inputParams && outputParams ? ',' : ''}${outputParams ? outputParams : ''}>`
+	}
+	return `${getAbiSignature(functionDef)}`
+}
+
+const getParameters = (parametersDefinition: SolidityVariable[] | undefined) => {
+	let count = 0;
+	let paramContents = ''
+	if(parametersDefinition){
+		parametersDefinition.forEach(param => {
+			paramContents += `,${param.name ? `${param.name}` : `${count++}`}: ${convert(param.type)}`
+		})
+		paramContents = paramContents.length > 0 ? paramContents.substr(1) : paramContents; //remove the leading comma
+	}
+	return paramContents;
+}

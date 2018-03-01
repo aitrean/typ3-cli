@@ -1,4 +1,4 @@
-import { getAbiInterfaces, interfaces, Types } from './builder';
+import { getAbiInterfaces, interfaces } from './builder';
 import { options, usage } from './cli';
 import { Output } from './io';
 import { getPath, getName } from './builder/utils'
