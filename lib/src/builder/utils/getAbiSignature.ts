@@ -1,4 +1,4 @@
-import { functionDefinition } from '../../types/AbiTypes'
+import { functionDefinition } from '../../Types/AbiTypes'
  
 export const getAbiSignature = (functionDefinition: functionDefinition) => {
 	if (functionDefinition.constant) {
