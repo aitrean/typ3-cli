@@ -1,4 +1,4 @@
-export const convert = (type: string) => {
+const convert = (type: string) => {
 	const bytesExp = new RegExp(/^byte(s)?(\d+)?(\[])?$/, 'mg')
 	const uintExp = new RegExp(/^uint(\d+)?(\[])?$/, 'mg')
 	const addressExp = new RegExp(/^address(\[])?$/, 'mg')
@@ -21,3 +21,5 @@ export const convert = (type: string) => {
 	}
 	return type;
 }
+
+export default convert

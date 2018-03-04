@@ -1,1 +1,0 @@
-export const imports = `import { BN } from 'bn.js'`

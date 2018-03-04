@@ -1,6 +1,5 @@
-import { convert } from './typings';
-import { SolidityVariable } from './../types';
-import { functionDefinition } from '../types'
+import convert from './convertTypings';
+import { SolidityVariable, functionDefinition } from '../../Types/abiTypes';
 import { getAbiSignature } from './getAbiSignature'
 
 export const getDetails = (functionDef: functionDefinition) => {
