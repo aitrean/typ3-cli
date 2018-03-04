@@ -7,18 +7,18 @@ const relative = require('require-relative')
 export const buildTypedABIs = () => {
   const opts = options;
   const contractFiles = opts.files;
-  const abiOutputFiles = opts.outputSpecifications;
+  const abiOutputFiles = opts.outputConfigurations;
   const outputFile = opts.outputFile ? opts.outputFile : './abiTypes.ts';
   const printer = new Output(outputFile);
   
   try {
-    const outputSpecs = {}
+    const outputConfigs = {}
     if(abiOutputFiles){
       abiOutputFiles.forEach(file => {
         const filePath = getPath(file);
-        const specName = getName(file);
-        const outputSpec = require(filePath)
-        outputSpecs[specName] = outputSpec;
+        const configName = getName(file);
+        const outputConfig = require(filePath)
+        outputConfigs[configName] = outputConfig;
       })
     }
     if(contractFiles){
@@ -26,8 +26,8 @@ export const buildTypedABIs = () => {
         const filePath = getPath(file);
         const interfaceName = getName(file);
         let abi = require(filePath)
-        if(outputSpecs[interfaceName]){
-          abi = modifyOutputNames(abi, outputSpecs[interfaceName]);
+        if(outputConfigs[interfaceName]){
+          abi = modifyOutputNames(abi, outputConfigs[interfaceName]);
         }
         printer.print(getAbiInterfaces(abi, interfaceName, outputFile))
       })
@@ -42,19 +42,18 @@ export const buildTypedABIs = () => {
   }
 }
 
-const modifyOutputNames= (abi, outputSpec): any => {
+const modifyOutputNames= (abi, outputConfig): any => {
   abi.forEach(func => {
-    if(func.outputs && func.outputs.length > 0 && outputSpec[func.name]){
-      const functionSpec = outputSpec[func.name]
-      if(func.outputs.length === functionSpec.length){
+    if(func.outputs && func.outputs.length > 0 && outputConfig[func.name]){
+      const functionConfig = outputConfig[func.name]
+      if(func.outputs.length === functionConfig.length){
         for(var i in func.outputs){
-          func.outputs[i].name = functionSpec[i]
+          func.outputs[i].name = functionConfig[i]
         }
       } else {
         console.warn(`Output mappings for function ${func.name} are not equivalent between the output file and the abi. Defaulting to abi output names for ${func.name}`)
       }
     }
   })
-  console.log(abi)
   return abi;
 }
