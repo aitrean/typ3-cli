@@ -1,9 +1,8 @@
 import { functionDefinition } from './types';
 import { getPath, getName, getDetails } from './utils'
 import { Output } from '../io';
-import { interfaces } from '../builder'
 
-export const getAbiInterfaces = (abi: any, interfaceName: string, outputFile: string): string => {
+export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: string): string => {
  let abiTypings = '';
  let parameterCount = 0;
  abi.forEach((functionDefinition: functionDefinition) => {

@@ -1,3 +1,4 @@
 export { interfaces } from './interfaces';
-export { getAbiInterfaces } from './getAbiInterfaces'
+export { getAbiDeclaration } from './getAbiDeclaration'
+export { imports } from './imports'
 export * from './types';

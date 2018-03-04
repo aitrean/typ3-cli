@@ -1,4 +1,4 @@
-import { convert } from './convertSolidityTypings';
+import { convert } from './typings';
 import { SolidityVariable } from './../types';
 import { functionDefinition } from '../types'
 import { getAbiSignature } from './getAbiSignature'

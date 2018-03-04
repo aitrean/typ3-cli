@@ -1,4 +1,4 @@
-import { getAbiInterfaces, interfaces } from './builder';
+import { getAbiDeclaration, interfaces, imports } from './builder';
 import { options, usage } from './cli';
 import { Output } from './io';
 import { getPath, getName } from './builder/utils'
@@ -22,6 +22,7 @@ export const buildTypedABIs = () => {
       })
     }
     if(contractFiles){
+      printer.print(imports)
       contractFiles.forEach(file => {
         const filePath = getPath(file);
         const interfaceName = getName(file);
@@ -29,7 +30,7 @@ export const buildTypedABIs = () => {
         if(outputConfigs[interfaceName]){
           abi = modifyOutputNames(abi, outputConfigs[interfaceName]);
         }
-        printer.print(getAbiInterfaces(abi, interfaceName, outputFile))
+        printer.print(getAbiDeclaration(abi, interfaceName, outputFile))
       })
       printer.print(interfaces);
     }
