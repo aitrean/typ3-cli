@@ -2,7 +2,7 @@ import convert from './convertTypings';
 import { SolidityVariable, functionDefinition } from '../../Types/abiTypes';
 import { getAbiSignature } from './getAbiSignature'
 
-export const getDetails = (functionDef: functionDefinition) => {
+export const getDetails = (functionDef: functionDefinition, connected?: boolean) => {
 	const {name, inputs, outputs} = functionDef
 	const signature = getAbiSignature(functionDef);
 	const inputsPresent = inputs && (inputs.length > 0);
@@ -10,7 +10,7 @@ export const getDetails = (functionDef: functionDefinition) => {
 	const inputParams = inputsPresent ? `{${getParameters(inputs)}}` : null
 	const outputParams = outputsPresent ? `{${getParameters(outputs)}}` : null
 	if(inputsPresent || outputsPresent){
-		return `${getAbiSignature(functionDef)}<${inputParams ? inputParams : ''}${inputParams && outputParams ? ',' : ''}${outputParams ? outputParams : ''}>`
+		return `${getAbiSignature(functionDef, connected)}<${inputParams ? inputParams : ''}${inputParams && outputParams ? ',' : ''}${outputParams ? outputParams : ''}>`
 	}
 	return `${getAbiSignature(functionDef)}`
 }

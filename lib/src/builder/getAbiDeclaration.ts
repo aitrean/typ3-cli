@@ -9,6 +9,7 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
  abi.forEach((functionDefinition: functionDefinition) => {
 	if(functionDefinition.type !== 'event' && functionDefinition.type !== 'fallback'){
 		abiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition)};\n`;
+		connectedAbiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition, true)};\n`;
 	}
 })
 
