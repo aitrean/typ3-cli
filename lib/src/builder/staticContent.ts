@@ -1,4 +1,4 @@
-export const imports = `import { BN } from 'bn.js'`
+export const imports = `import BN from 'bn.js'`
 
 export const interfaces = `
 interface ABIFuncParamlessCall<T = void> {
