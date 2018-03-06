@@ -17,12 +17,12 @@ export const getDetails = (functionDef: functionDefinition, connected?: boolean)
 
 const getParameters = (parametersDefinition: SolidityVariable[] | undefined, outputNames?: string[]) => {
 	let count = 0;
-	let paramContents = ''
+	let paramContents;
 	if(parametersDefinition){
-		parametersDefinition.map(param => {
-			paramContents += `,${param.name ? `${param.name}` : `${count++}`}: ${convert(param.type)}`
+		paramContents = parametersDefinition.map(param => {
+			return `${param.name ? `${param.name}` : `${count++}`}: ${convert(param.type)}`
 		})
-		paramContents = paramContents.length > 0 ? paramContents.substr(1) : paramContents; //remove the leading comma
+		paramContents = paramContents.join(',')
 	}
 	return paramContents;
 }

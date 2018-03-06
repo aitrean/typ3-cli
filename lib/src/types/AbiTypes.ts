@@ -3,7 +3,9 @@ export interface functionDefinition {
   inputs?: SolidityVariable[]
   outputs?: SolidityVariable[]
 	constant?: boolean
-	type?: string
+  type?: string
+  payable?: boolean
+  stateMutability?: string
 }
 
 export interface SolidityVariable {
