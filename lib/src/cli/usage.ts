@@ -16,6 +16,13 @@ const sections = [
           multiple: true
         },
         {
+          name: 'configuration files',
+          alias: 'c',
+          typeLabel: 'configutation', 
+          description: 'Files for configuring output names on transaction objects',
+          multiple: true
+        },
+        {
             name: 'output',
             alias: 'o',
             typeLabel: 'outputFile',
