@@ -7,9 +7,10 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
  let connectedAbiTypings = '';
  let parameterCount = 0;
  abi.forEach((functionDefinition: functionDefinition) => {
-	if(functionDefinition.type !== 'event' && functionDefinition.type !== 'fallback'){
-		abiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition)};\n`;
-		connectedAbiTypings += `${functionDefinition.name ? `${functionDefinition.name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition, true)};\n`;
+	const {name, type} = functionDefinition
+	if(type !== 'event' && type !== 'fallback'){
+		abiTypings += `${name ? `${name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition)};\n`;
+		connectedAbiTypings += `${name ? `${name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition, true)};\n`;
 	}
 })
 

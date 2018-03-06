@@ -10,7 +10,7 @@ export class Output {
         this.outputFile = filePath
     }
 
-    public print = (text) => {
+    public print = (text: string) => {
         appendFileSync(this.outputFile, `${text}\n\n`)
     }
 

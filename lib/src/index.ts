@@ -43,7 +43,7 @@ export const buildTypedABIs = () => {
   }
 }
 
-const modifyOutputNames= (abi, outputConfig): any => {
+const modifyOutputNames = (abi: any, outputConfig: string[]): any => {
   abi.forEach(func => {
     if(func.outputs && func.outputs.length > 0 && outputConfig[func.name]){
       const functionConfig = outputConfig[func.name]
