@@ -17,8 +17,9 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
  let parameterCount = 0;
  const abiObject = parseAbi(abi);
  if(abiObject.constructor) {
-	 const constructorName = `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`
-	 abiTypings += `${constructorName}: ${getDetails(abiObject.constructor)}\n`
+	 connectedAbiTypings += `new: ${getDetails(abiObject.constructor, true)}\n`
+ } else {
+	 connectedAbiTypings += `new: ABIFuncParamlessSendConnected\n`
  }
  if(abiObject.overloadedFunctions){
 	Object.keys(abiObject.overloadedFunctions).forEach((name: string) => {
