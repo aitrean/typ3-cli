@@ -46,3 +46,7 @@ interface ICallTxObj {
   data?: string;
 }
 `;
+
+export const defaultProperties = `address: string
+balance: Promise<BN>
+`

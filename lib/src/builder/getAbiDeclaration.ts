@@ -1,3 +1,4 @@
+import { defaultProperties } from './staticContent';
 import { functionDefinition } from '../Types/AbiTypes';
 import { getPath, getName, getDetails } from './utils'
 import { Output } from '../io';
@@ -35,8 +36,8 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
 	})
  }
 
-	const contractInterface = `export interface I${interfaceName} {\n${abiTypings}}`
-	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${connectedAbiTypings}}`
+	const contractInterface = `export interface I${interfaceName}{\n${abiTypings}}`
+	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${defaultProperties}${connectedAbiTypings}}`
 
 	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}`
 	return combinedContractInterface;
