@@ -1,6 +1,6 @@
 const convert = (type: string) => {
 	const bytesExp = new RegExp(/^byte(s)?(\d+)?(\[])?$/, 'mg')
-	const uintExp = new RegExp(/^uint(\d+)?(\[])?$/, 'mg')
+	const uintExp = new RegExp(/^u?int(\d+)?(\[])?$/, 'mg')
 	const addressExp = new RegExp(/^address(\[])?$/, 'mg')
 	const boolExp = new RegExp(/^bool(\[])?$/)
 

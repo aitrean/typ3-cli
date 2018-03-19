@@ -4,6 +4,7 @@ import { getPath, getName, getDetails } from './utils'
 import { Output } from '../io';
 
 declare interface AbiObject {
+	constructorFunction: functionDefinition
 	overloadedFunctions: {
 		[func: string]: functionDefinition[]
 	}
@@ -15,12 +16,13 @@ declare interface AbiObject {
 export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: string): string => {
  let abiTypings = '';
  let connectedAbiTypings = '';
+ let constructorTypings = '';
  let parameterCount = 0;
  const abiObject = parseAbi(abi);
- if(abiObject.constructor) {
-	 connectedAbiTypings += `new: ${getDetails(abiObject.constructor, true)}\n`
+ if(abiObject.constructor && abiObject.constructorFunction.inputs) {
+	 constructorTypings += `${getDetails(abiObject.constructor, true)}\n`
  } else {
-	 connectedAbiTypings += `new: ABIFuncParamlessSendConnected\n`
+	 constructorTypings += `never\n`
  }
  if(abiObject.overloadedFunctions){
 	Object.keys(abiObject.overloadedFunctions).forEach((name: string) => {
@@ -37,34 +39,38 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
  }
 
 	const contractInterface = `export interface I${interfaceName}{\n${abiTypings}}`
-	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${defaultProperties}${connectedAbiTypings}}`
+	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${defaultProperties}${connectedAbiTypings}}\n`
+	const connectedContractConstructor = `export type I${interfaceName}Constructor = ${constructorTypings}`
 
-	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}`
+	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}${connectedContractConstructor}`
 	return combinedContractInterface;
 }
 
 const parseAbi = (abi: any[]): AbiObject => {
-	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}}
+	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}, constructorFunction: {}}
 	//extract all functions
 	abi = abi.filter(functionObject => {
 		const {name, type, ...rest} = functionObject;
-		return name && (type === 'function' || type === 'constructor') ? true : false
+		return (type === 'function' || type === 'constructor') ? true : false
 	})
 	//sort sort function types into their respective categories (functions, overloaded functions, constructor)
 	//TODO add support for evens and fallback later
 	abi.map(functionObject => {
-		const {name, ...values} = functionObject
 		const { type } = functionObject
 		if(type === 'constructor'){
-			abiObject.constructor = {...values}
-		} else if(abiObject.overloadedFunctions[name]){
-			abiObject.overloadedFunctions[name].push({...values})
-		} else if(abiObject.regularFunctions[name]){
-			abiObject.overloadedFunctions[name] = [{...values}]
-			abiObject.overloadedFunctions[name].push(abiObject.regularFunctions[name])
-			delete abiObject.regularFunctions[name]
+			abiObject.constructorFunction = functionObject;
+			return abiObject;
 		} else {
-			abiObject.regularFunctions[name] = {...values}
+			const { name, ...values } = functionObject
+			if(abiObject.overloadedFunctions[name]){
+				abiObject.overloadedFunctions[name].push({...values})
+			} else if(abiObject.regularFunctions[name]){
+				abiObject.overloadedFunctions[name] = [{...values}]
+				abiObject.overloadedFunctions[name].push(abiObject.regularFunctions[name])
+				delete abiObject.regularFunctions[name]
+			} else {
+				abiObject.regularFunctions[name] = {...values}
+			}
 		}
 	})
 	return abiObject;
