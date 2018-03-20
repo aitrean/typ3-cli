@@ -4,13 +4,14 @@
   "description": "CLI tool for creating typed definition files from ABI",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc --watch"
+    "tsc": "tsc",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/MyCryptoHQ/typ3-cli.git"
   },
-  "author": "Mike Stupich, Henry Nguyen, William Prado",
+  "author": "William Prado, Mike Stupich, Henry Nguyen",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/MyCryptoHQ/typ3-cli/issues"
@@ -18,13 +19,29 @@
   "homepage": "https://github.com/MyCryptoHQ/typ3-cli#readme",
   "devDependencies": {
     "@types/node": "^8.0.34",
-    "tslint": "^5.7.0",
+    "jest": "^22.4.2",
+    "tslint": "^5.9.1",
     "typescript": "^2.7.2"
   },
   "dependencies": {
+    "@types/jest": "^22.2.0",
     "command-line-args": "^4.0.7",
     "command-line-usage": "^4.0.1",
-    "require-relative": "^0.8.7"
+    "npm": "^5.7.1",
+    "require-relative": "^0.8.7",
+    "ts-jest": "^22.4.2",
+    "tslint-config-prettier": "^1.10.0"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   },
   "bin": {
     "typ3-cli": "./dist/index.js"

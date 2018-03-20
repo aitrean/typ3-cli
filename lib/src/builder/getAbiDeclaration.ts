@@ -1,23 +1,22 @@
 import { defaultProperties } from './staticContent';
-import { functionDefinition } from '../Types/AbiTypes';
+import { FunctionDefinition } from '../Types/AbiTypes';
 import { getPath, getName, getDetails } from './utils'
 import { Output } from '../io';
 
 declare interface AbiObject {
-	constructorFunction: functionDefinition
+	constructorFunction: FunctionDefinition
 	overloadedFunctions: {
-		[func: string]: functionDefinition[]
+		[func: string]: FunctionDefinition[]
 	}
 	regularFunctions: {
-		[func: string]: functionDefinition
+		[func: string]: FunctionDefinition
 	}
 }
 
-export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: string): string => {
+export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  let abiTypings = '';
  let connectedAbiTypings = '';
  let constructorTypings = '';
- let parameterCount = 0;
  const abiObject = parseAbi(abi);
  if(abiObject.constructor && abiObject.constructorFunction.inputs) {
 	 constructorTypings += `${getDetails(abiObject.constructor, true)}\n`
@@ -46,7 +45,7 @@ export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: s
 	return combinedContractInterface;
 }
 
-const parseAbi = (abi: any[]): AbiObject => {
+export const parseAbi = (abi: any[]): AbiObject => {
 	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}, constructorFunction: {}}
 	//extract all functions
 	abi = abi.filter(functionObject => {
@@ -54,7 +53,7 @@ const parseAbi = (abi: any[]): AbiObject => {
 		return (type === 'function' || type === 'constructor') ? true : false
 	})
 	//sort sort function types into their respective categories (functions, overloaded functions, constructor)
-	//TODO add support for evens and fallback later
+	//TODO add support for events and fallback later
 	abi.map(functionObject => {
 		const { type } = functionObject
 		if(type === 'constructor'){
@@ -76,7 +75,7 @@ const parseAbi = (abi: any[]): AbiObject => {
 	return abiObject;
 }
 
-const parseOverloadedFunctions = (overloadedFunctions: functionDefinition[], connected?: boolean) => {
+const parseOverloadedFunctions = (overloadedFunctions: FunctionDefinition[], connected?: boolean) => {
 	let details = overloadedFunctions.map(func => {
 		return getDetails(func, connected)
 	})

@@ -44,10 +44,8 @@ interface ICallTxObj {
   gasPrice?: string;
   value?: string;
   data?: string;
-}
-`;
+}`;
 
 export const defaultProperties = `address: string
-balance: Promise<BN>
-at: ABIFuncSendConnected<{address: string}>
+balance: ABIFuncParamlessCallConnected
 `

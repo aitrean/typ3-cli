@@ -1,8 +1,8 @@
 import convert from './convertTypings';
-import { SolidityVariable, functionDefinition } from '../../Types/abiTypes';
+import { SolidityVariable, FunctionDefinition } from '../../Types/abiTypes';
 import { getAbiSignature } from './getAbiSignature'
 
-export const getDetails = (functionDef: functionDefinition, connected?: boolean) => {
+export const getDetails = (functionDef: FunctionDefinition, connected?: boolean) => {
 	const {name, inputs, outputs} = functionDef
 	const signature = getAbiSignature(functionDef, connected);
 	const inputsPresent = inputs && (inputs.length > 0);

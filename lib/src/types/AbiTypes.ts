@@ -1,4 +1,4 @@
-export interface functionDefinition {
+export interface FunctionDefinition {
   name?: string
   inputs?: SolidityVariable[]
   outputs?: SolidityVariable[]
