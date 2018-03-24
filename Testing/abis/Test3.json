@@ -16,7 +16,7 @@
 	{
 		"constant": false,
 		"inputs": [],
-		"name": "Test1",
+		"name": "Test3",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",

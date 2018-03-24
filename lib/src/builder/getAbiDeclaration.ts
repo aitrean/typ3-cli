@@ -1,17 +1,8 @@
 import { defaultProperties } from './staticContent';
 import { FunctionDefinition } from '../Types/AbiTypes';
 import { getPath, getName, getDetails } from './utils'
+import { parseAbi } from './parseAbi'
 import { Output } from '../io';
-
-declare interface AbiObject {
-	constructorFunction: FunctionDefinition
-	overloadedFunctions: {
-		[func: string]: FunctionDefinition[]
-	}
-	regularFunctions: {
-		[func: string]: FunctionDefinition
-	}
-}
 
 export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  let abiTypings = '';
@@ -43,36 +34,6 @@ export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
 
 	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}${connectedContractConstructor}`
 	return combinedContractInterface;
-}
-
-export const parseAbi = (abi: any[]): AbiObject => {
-	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}, constructorFunction: {}}
-	//extract all functions
-	abi = abi.filter(functionObject => {
-		const {name, type, ...rest} = functionObject;
-		return (type === 'function' || type === 'constructor') ? true : false
-	})
-	//sort sort function types into their respective categories (functions, overloaded functions, constructor)
-	//TODO add support for events and fallback later
-	abi.map(functionObject => {
-		const { type } = functionObject
-		if(type === 'constructor'){
-			abiObject.constructorFunction = functionObject;
-			return abiObject;
-		} else {
-			const { name, ...values } = functionObject
-			if(abiObject.overloadedFunctions[name]){
-				abiObject.overloadedFunctions[name].push({...values})
-			} else if(abiObject.regularFunctions[name]){
-				abiObject.overloadedFunctions[name] = [{...values}]
-				abiObject.overloadedFunctions[name].push(abiObject.regularFunctions[name])
-				delete abiObject.regularFunctions[name]
-			} else {
-				abiObject.regularFunctions[name] = {...values}
-			}
-		}
-	})
-	return abiObject;
 }
 
 const parseOverloadedFunctions = (overloadedFunctions: FunctionDefinition[], connected?: boolean) => {

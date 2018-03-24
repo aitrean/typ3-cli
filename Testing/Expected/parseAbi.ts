@@ -125,7 +125,7 @@ export const parseAbiTest3 = {
     ]
   },
   regularFunctions: {
-    Test1: {
+    Test3: {
       constant: false,
       inputs: [],
       outputs: [],

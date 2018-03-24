@@ -47,5 +47,4 @@ interface ICallTxObj {
 }`;
 
 export const defaultProperties = `address: string
-balance: ABIFuncParamlessCallConnected
 `

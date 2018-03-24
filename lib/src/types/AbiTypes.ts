@@ -12,3 +12,13 @@ export interface SolidityVariable {
   name: string
   type: string
 }
+
+export interface AbiObject {
+	constructorFunction: FunctionDefinition
+	overloadedFunctions: {
+		[func: string]: FunctionDefinition[]
+	}
+	regularFunctions: {
+		[func: string]: FunctionDefinition
+	}
+}
