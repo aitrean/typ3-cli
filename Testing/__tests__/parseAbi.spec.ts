@@ -1,6 +1,12 @@
-import { parseAbi } from './../../lib/src/builder/getAbiDeclaration'; //TODO resolve pathing
-import { getAbiDeclaration } from '../../lib/src/builder/getAbiDeclaration';
-import { parseAbiTest0, parseAbiTest1, parseAbiTest2, parseAbiTest3 } from '../Expected';
+import { getAbiDeclaration, parseAbi } from '../../lib/src/builder';
+import { getAbiDecTest0, 
+				 getAbiDecTest1, 
+				 getAbiDecTest2,
+				 getAbiDecTest3, 
+				 parseAbiTest0, 
+				 parseAbiTest1, 
+				 parseAbiTest2, 
+				 parseAbiTest3 } from '../Expected';
 
 const test0File = require('../abis/test0.json')
 const test1File = require('../abis/test1.json')
