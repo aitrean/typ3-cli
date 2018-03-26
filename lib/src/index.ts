@@ -30,7 +30,7 @@ export const buildTypedABIs = () => {
         if(outputConfigs[interfaceName]){
           abi = modifyOutputNames(abi, outputConfigs[interfaceName]);
         }
-        printer.print(getAbiDeclaration(abi, interfaceName, outputFile))
+        printer.print(getAbiDeclaration(abi, interfaceName))
       })
       printer.print(interfaces);
     }
@@ -43,14 +43,15 @@ export const buildTypedABIs = () => {
   }
 }
 
-const modifyOutputNames = (abi: any, outputConfig: string[]): any => {
+export const modifyOutputNames = (abi: any, outputConfig: string[]): any => {
   abi.forEach(func => {
     if(func.outputs && func.outputs.length > 0 && outputConfig[func.name]){
       const functionConfig = outputConfig[func.name]
       if(func.outputs.length === functionConfig.length){
-        for(var i in func.outputs){
-          func.outputs[i].name = functionConfig[i]
-        }
+        func.outputs.map(i => {
+          func.outputs[i].name = functionConfig[i];
+          i++
+        })
       } else {
         console.warn(`Output mappings for function ${func.name} are not equivalent between the output file and the abi. Defaulting to abi output names for ${func.name}`)
       }

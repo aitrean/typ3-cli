@@ -1,6 +1,6 @@
 const convert = (type: string) => {
 	const bytesExp = new RegExp(/^byte(s)?(\d+)?(\[])?$/, 'mg')
-	const uintExp = new RegExp(/^uint(\d+)?(\[])?$/, 'mg')
+	const intExp = new RegExp(/^u?int(\d+)?(\[])?$/, 'mg')
 	const addressExp = new RegExp(/^address(\[])?$/, 'mg')
 	const boolExp = new RegExp(/^bool(\[])?$/)
 
@@ -9,13 +9,9 @@ const convert = (type: string) => {
 	} else if(addressExp.test(type)){
 		return type.match(/\[]/) ? 'string[]' : 'string'
 	} else if(bytesExp.test(type)){
-		return type.match(/\[]/) ? 'string[]' : 'string'
-	} else if(uintExp.test(type)) {
-		let returnType = 'BN'
-		if(type.match('\d+')){
-			const byteLength = Number(type.match('\d+'));
-			returnType = byteLength > 64 ? 'BN' : 'number'
-		}
+		return type.match(/\[]/) ? 'string[]' : 'string | Buffer'
+	} else if(intExp.test(type)) {
+		let returnType = 'BN | Buffer'
 		returnType += type.match('\[]') ? '[]' : ''
 		return returnType;
 	}

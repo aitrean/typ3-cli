@@ -1,22 +1,45 @@
-import { functionDefinition } from '../Types/AbiTypes';
+import { defaultProperties } from './staticContent';
+import { FunctionDefinition } from '../Types/AbiTypes';
 import { getPath, getName, getDetails } from './utils'
+import { parseAbi } from './parseAbi'
 import { Output } from '../io';
 
-export const getAbiDeclaration = (abi: any, interfaceName: string, outputFile: string): string => {
+export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  let abiTypings = '';
  let connectedAbiTypings = '';
- let parameterCount = 0;
- abi.forEach((functionDefinition: functionDefinition) => {
-	const {name, type} = functionDefinition
-	if(type !== 'event' && type !== 'fallback'){
-		abiTypings += `${name ? `${name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition)};\n`;
-		connectedAbiTypings += `${name ? `${name}` : `${interfaceName.charAt(0).toLowerCase() + interfaceName.slice(1)}`}: ${getDetails(functionDefinition, true)};\n`;
-	}
-})
+ let constructorTypings = '';
+ const abiObject = parseAbi(abi);
+ if(abiObject.constructor && abiObject.constructorFunction.inputs) {
+	 constructorTypings += `${getDetails(abiObject.constructor, true)}\n`
+ } else {
+	 constructorTypings += `never\n`
+ }
+ if(abiObject.overloadedFunctions){
+	Object.keys(abiObject.overloadedFunctions).forEach((name: string) => {
+		abiTypings += `${name}: ${parseOverloadedFunctions(abiObject.overloadedFunctions[name])}\n`
+		connectedAbiTypings += `${name}: ${parseOverloadedFunctions(abiObject.overloadedFunctions[name], true)}\n`
+	 })
+ }
+ if(abiObject.regularFunctions){
+	Object.keys(abiObject.regularFunctions).forEach((name: string) => {
+		const func = abiObject.regularFunctions[name]
+		abiTypings += `${name}: ${getDetails(func)}\n`
+		connectedAbiTypings += `${name}: ${getDetails(func, true)};\n`
+	})
+ }
 
-	const contractInterface = `export interface I${interfaceName} {\n${abiTypings}}`
-	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${connectedAbiTypings}}`
+	const contractInterface = `export interface I${interfaceName}{\n${abiTypings}}`
+	const connectedContractInterface = `export interface I${interfaceName}Connected {\n${defaultProperties}${connectedAbiTypings}}\n`
+	const connectedContractConstructor = `export type I${interfaceName}Constructor = ${constructorTypings}`
 
-	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}`
+	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}${connectedContractConstructor}`
 	return combinedContractInterface;
+}
+
+const parseOverloadedFunctions = (overloadedFunctions: FunctionDefinition[], connected?: boolean) => {
+	let details = overloadedFunctions.map(func => {
+		return getDetails(func, connected)
+	})
+	details = [...new Set(details)] //remove duplicates, since multiple Solidity typings may sometimes convert 
+	return details.join(' | ')
 }

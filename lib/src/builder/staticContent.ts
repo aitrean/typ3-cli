@@ -24,10 +24,10 @@ interface ABIFuncSend<T> {
 }
 type ABIFuncCallConnected<T, K = void> = (x: T, txObj?: ICallTxObj) => Promise<K>;
 type ABIFuncParamlessCallConnected<T = void> = (txObj?: ICallTxObj) => Promise<T>;
-type ABIFuncSendConnected<T> = (x: T, txObj?: ITransactionObj) => Promise<string>;
-type ABIFuncParamlessSendConnected = (txObj?: ITransactionObj) => Promise<string>;
+type ABIFuncSendConnected<T> = (x: T, txObj?: ITransactionObject) => Promise<string>;
+type ABIFuncParamlessSendConnected = (txObj?: ITransactionObject) => Promise<string>;
 
-interface ITransactionObj {
+interface ITransactionObject {
   from?: string;
   to?: string;
   gas?: string;
@@ -44,5 +44,7 @@ interface ICallTxObj {
   gasPrice?: string;
   value?: string;
   data?: string;
-}
-`;
+}`;
+
+export const defaultProperties = `address: string
+`

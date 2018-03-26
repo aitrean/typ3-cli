@@ -1,0 +1,72 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "bytes32"
+			}
+		],
+		"name": "function1",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "bytes32"
+			},
+			{
+				"name": "b",
+				"type": "uint256"
+			}
+		],
+		"name": "function2",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "a",
+				"type": "bytes32"
+			},
+			{
+				"name": "b",
+				"type": "uint256"
+			}
+		],
+		"name": "function3",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [],
+		"name": "function0",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	}
+]
