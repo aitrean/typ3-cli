@@ -9,8 +9,8 @@ export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  let connectedAbiTypings = '';
  let constructorTypings = '';
  const abiObject = parseAbi(abi);
- if(abiObject.constructor && abiObject.constructorFunction.inputs) {
-	 constructorTypings += `${getDetails(abiObject.constructor, true)}\n`
+ if(abiObject.constructorFunction && abiObject.constructorFunction.inputs) {
+	 constructorTypings += `${getDetails(abiObject.constructorFunction, true)}\n`
  } else {
 	 constructorTypings += `never\n`
  }
