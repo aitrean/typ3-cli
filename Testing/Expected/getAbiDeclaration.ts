@@ -11,7 +11,7 @@ export const getAbiDecTest1 = `export interface ITest1{
 export interface ITest1Connected {
 address: string
 }
-export type ITest1Constructor = ABIFuncParamlessSendConnected
+export type ITest1Constructor = ABIFuncSendConnected<{a: BN | Buffer,b: string | Buffer}>
 `
 
 export const getAbiDecTest2 = `export interface ITest2{
