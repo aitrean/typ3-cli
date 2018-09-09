@@ -1,6 +1,6 @@
 import { defaultProperties } from './staticContent';
 import { FunctionDefinition } from '../Types/AbiTypes';
-import { getPath, getName, getDetails } from './utils'
+import { getPath, getName, getDetails, parseOverloadedFunctions } from './utils'
 import { parseAbi } from './parseAbi'
 import { Output } from '../io';
 
@@ -14,6 +14,7 @@ export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
  } else {
 	 constructorTypings += `never\n`
  }
+
  if(abiObject.overloadedFunctions){
 	Object.keys(abiObject.overloadedFunctions).forEach((name: string) => {
 		abiTypings += `${name}: ${parseOverloadedFunctions(abiObject.overloadedFunctions[name])}\n`
@@ -34,12 +35,4 @@ export const getAbiDeclaration = (abi: any, interfaceName: string): string => {
 
 	const combinedContractInterface = `${contractInterface}\n${connectedContractInterface}${connectedContractConstructor}`
 	return combinedContractInterface;
-}
-
-const parseOverloadedFunctions = (overloadedFunctions: FunctionDefinition[], connected?: boolean) => {
-	let details = overloadedFunctions.map(func => {
-		return getDetails(func, connected)
-	})
-	details = [...new Set(details)] //remove duplicates, since multiple Solidity typings may sometimes convert 
-	return details.join(' | ')
 }

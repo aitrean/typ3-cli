@@ -22,6 +22,7 @@ interface ABIFuncSend<T> {
   encodeArguments(x: T): string;
   decodeArguments(str: string): T;
 }
+
 type ABIFuncCallConnected<T, K = void> = (x: T, txObj?: ICallTxObj) => Promise<K>;
 type ABIFuncParamlessCallConnected<T = void> = (txObj?: ICallTxObj) => Promise<T>;
 type ABIFuncSendConnected<T> = (x: T, txObj?: ITransactionObject) => Promise<string>;

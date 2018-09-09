@@ -6,12 +6,14 @@ import { getAbiDecTest0,
 				 parseAbiTest0, 
 				 parseAbiTest1, 
 				 parseAbiTest2, 
-				 parseAbiTest3 } from '../Expected';
+				 parseAbiTest3,
+				 parseAbiTest4 } from '../Expected';
 
 const test0File = require('../abis/test0.json')
 const test1File = require('../abis/test1.json')
 const test2File = require('../abis/test2.json')
 const test3File = require('../abis/test3.json')
+const test4File = require('../abis/test4.json')
 
 describe('parseAbi', () => {
 	it('should parse an abi with a blank constructor into an appropriate object', () => {
@@ -28,5 +30,9 @@ describe('parseAbi', () => {
 
 	it('should parse an abi with overloaded functions into an appropriate object', () => {
 		expect(parseAbi(test3File)).toEqual(parseAbiTest3)
+	})
+
+	it('should parse an abi with events into an appropriate object', () => {
+		expect(parseAbi(test4File)).toEqual(parseAbiTest4)
 	})
 })

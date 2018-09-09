@@ -1,15 +1,20 @@
 import { FunctionDefinition, AbiObject } from './../types/AbiTypes';
 
 export const parseAbi = (abi: any[]): AbiObject => {
-	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}, constructorFunction: {}}
+	const abiObject: AbiObject = {overloadedFunctions: {}, regularFunctions: {}, constructorFunction: {}, events: {}}
 	//extract all functions
-	abi = abi.filter(functionObject => {
+	const functionAbi = abi.filter(functionObject => {
 		const {name, type, ...rest} = functionObject;
 		return (type === 'function' || type === 'constructor') ? true : false
 	})
-	//sort sort function types into their respective categories (functions, overloaded functions, constructor)
-	//TODO add support for events and fallback later
-	abi.map(functionObject => {
+
+	const eventAbi = abi.filter(eventObject => {
+		const {name, type, ...rest} = eventObject;
+		return (type === 'event') ? true : false
+	})
+	//sort function types into their respective categories (functions, overloaded functions, constructor)
+	//TODO add support for fallback later
+	functionAbi.map(functionObject => {
 		const { type } = functionObject
 		if(type === 'constructor'){
 			abiObject.constructorFunction = functionObject;
@@ -27,5 +32,11 @@ export const parseAbi = (abi: any[]): AbiObject => {
 			}
 		}
 	})
+
+	eventAbi.map(eventObject => {
+		const { name, ...values } = eventObject
+		abiObject.events[name] = {...values}
+	})
+
 	return abiObject;
 }

@@ -3,9 +3,17 @@ export interface FunctionDefinition {
   inputs?: SolidityVariable[]
   outputs?: SolidityVariable[]
 	constant?: boolean
-  type?: string
   payable?: boolean
-  stateMutability?: string
+	stateMutability?: string
+	type?: string //type is optional because constructors don't have a type field
+}
+
+//TODO check optionality of names in EventDefinition
+export interface EventDefinition {
+	name?: string
+	anonymous?: boolean
+	inputs?: SolidityVariable[]
+	type: string
 }
 
 export interface SolidityVariable {
@@ -20,5 +28,8 @@ export interface AbiObject {
 	}
 	regularFunctions: {
 		[func: string]: FunctionDefinition
+	}
+	events: {
+		[func: string]: EventDefinition
 	}
 }

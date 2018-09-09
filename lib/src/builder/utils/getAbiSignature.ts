@@ -1,3 +1,4 @@
+import { EventDefinition } from './../../types/AbiTypes';
 import { FunctionDefinition } from '../../Types/AbiTypes'
  
 export const getAbiSignature = (functionDef: FunctionDefinition, connected?: boolean) => {

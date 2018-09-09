@@ -1,0 +1,47 @@
+[
+	{
+		"anonymous": false,
+		"inputs": [],
+		"name": "foo",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "bar",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "a",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"name": "b",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"name": "c",
+				"type": "string"
+			}
+		],
+		"name": "baz",
+		"type": "event"
+	}
+]
